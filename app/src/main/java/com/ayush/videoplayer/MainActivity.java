@@ -12,23 +12,31 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     ArrayList<File> arrayList = new ArrayList<>();
-    //private ArrayAdapter<Folder> mArrayAdapter;
+    ArrayList<Folder> list = new ArrayList<>();
+
+    private ArrayAdapter<Folder> mArrayAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            //Toast.makeText(MainActivity.this, "Please give the required permissions", Toast.LENGTH_LONG).show();
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 44);
         }
@@ -44,7 +52,36 @@ public class MainActivity extends AppCompatActivity {
             String rootPath = root.getPath();
             File[] file = root.listFiles();
             dfs(file);
-            Log.e("this", "" + arrayList.size());
+            ListView listView = (ListView) findViewById(R.id.list);
+            mArrayAdapter = new FolderAdapter(MainActivity.this, 0, list);
+            HashMap<String, ArrayList<String>> hashMap = new HashMap<>();
+            for (int i = 0; i < arrayList.size(); i++) {
+                String s = arrayList.get(i).toString();
+                int ind = s.lastIndexOf('/');
+                String videoName = s.substring(ind + 1);
+                if (!arrayList.contains(s.substring(0, ind))) {
+                    ArrayList<String> a = new ArrayList<>();
+                    a.add(videoName);
+                    hashMap.put(s.substring(0, ind), a);
+                } else{
+                    ArrayList<String> a = hashMap.get(s.substring(0, ind));
+                    a.add(videoName);
+                    Log.e("this", "" + a.size());
+                    hashMap.put(s.substring(0, ind), a);
+                }
+            }
+            /*Iterator iterator = hashMap.entrySet().iterator();
+            while (iterator.hasNext()) {
+                Map.Entry map = (Map.Entry) iterator.next();
+                //Log.e("this", "" + map.getKey());
+                ArrayList<String> a = (ArrayList<String>) map.getValue();
+                for (int i = 0; i < a.size(); i++)
+                    Log.e(map.getKey().toString(), a.get(i));
+            }*/
+            //Log.e("this", hashMap.size() + "");
+            for (int i = 0; i < arrayList.size(); i++)
+                mArrayAdapter.add(new Folder(R.drawable.ic_folder_black_24dp, arrayList.get(i).toString()));
+            listView.setAdapter(mArrayAdapter);
         }
     }
 
@@ -58,11 +95,11 @@ public class MainActivity extends AppCompatActivity {
                     file[i].toString().endsWith(".mkv") ||
                     file[i].toString().endsWith(".flv")) {
                 arrayList.add(file[i]);
-                Log.e("this", "" + file[i]);
             } else if (file[i].isDirectory()) {
                 File[] files = file[i].listFiles();
                 dfs(files);
             }
         }
     }
+
 }
