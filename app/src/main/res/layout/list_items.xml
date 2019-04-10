@@ -10,20 +10,38 @@
         android:layout_height="wrap_content">
 
         <ImageView
+            android:id="@+id/folderimg"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:src="@drawable/ic_folder_black_24dp"
-            android:id="@+id/folderimg"/>
+            android:src="@drawable/ic_folder_black_24dp" />
 
-        <TextView
+        <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="7"
-            android:textColor="#000000"
-            tools:text="Sample"
-            android:id="@+id/foldername"/>
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/foldername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="4dp"
+                android:paddingTop="4dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                tools:text="Sample" />
+
+            <TextView
+                android:id="@+id/numberofvideos"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="12sp"
+                tools:text="number of videos" />
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

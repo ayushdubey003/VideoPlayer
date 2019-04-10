@@ -26,9 +26,11 @@ public class FolderAdapter extends ArrayAdapter<Folder> {
         if (convertView == null)
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.list_items, null, false);
         TextView textView = (TextView) convertView.findViewById(R.id.foldername);
+        TextView textView1 = (TextView) convertView.findViewById(R.id.numberofvideos);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.folderimg);
         textView.setText(getItem(position).getmFolderName());
         imageView.setImageResource(R.drawable.ic_folder_black_24dp);
+        textView1.setText(Integer.toString(getItem(position).getmSize())+" videos");
         return convertView;
     }
 }

@@ -3,10 +3,12 @@ package com.ayush.videoplayer;
 public class Folder {
     private int mID;
     private String mFolderName;
+    private int mSize;
 
-    public Folder(int id, String folderName) {
+    public Folder(int id, String folderName, int size) {
         mID = id;
         mFolderName = folderName;
+        mSize = size;
     }
 
     public int getmID() {
@@ -23,5 +25,13 @@ public class Folder {
 
     public void setmFolderName(String mFolderName) {
         this.mFolderName = mFolderName;
+    }
+
+    public int getmSize() {
+        return mSize;
+    }
+
+    public void setmSize(int mSize) {
+        this.mSize = mSize;
     }
 }
