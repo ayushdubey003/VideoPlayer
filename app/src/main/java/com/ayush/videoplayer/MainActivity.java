@@ -53,7 +53,9 @@ public class MainActivity extends AppCompatActivity {
                 return;
             } else if (file[i].toString().charAt(0) == '.')
                 return;
-            else if (file[i].toString().endsWith(".mp4") || file[i].toString().endsWith(".mkv")) {
+            else if (file[i].toString().endsWith(".mp4") ||
+                    file[i].toString().endsWith(".mkv") ||
+                    file[i].toString().endsWith(".flv")) {
                 arrayList.add(file[i]);
                 Log.e("this", "" + file[i]);
             } else if (file[i].isDirectory()) {
