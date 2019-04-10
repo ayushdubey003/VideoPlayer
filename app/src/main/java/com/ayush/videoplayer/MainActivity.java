@@ -27,26 +27,36 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //Toast.makeText(MainActivity.this, "Please give the required permissions", Toast.LENGTH_LONG).show();
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 44);
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(MainActivity.this, "Please give the required permissions", Toast.LENGTH_LONG).show();
             ActivityCompat.requestPermissions(MainActivity.this,
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 44);
-        } else {
+        }
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             File root = Environment.getExternalStorageDirectory();
             String rootPath = root.getPath();
             File[] file = root.listFiles();
             dfs(file);
+            Log.e("this", "" + arrayList.size());
         }
     }
 
     private void dfs(File file[]) {
         for (int i = 0; i < file.length; i++) {
-            if (file[i].toString().charAt(0) == '.')
+            if (file[i].toString().contains("/storage/emulated/0/Android/data")) {
+                return;
+            } else if (file[i].toString().charAt(0) == '.')
                 return;
             else if (file[i].toString().endsWith(".mp4") || file[i].toString().endsWith(".mkv")) {
                 arrayList.add(file[i]);
                 Log.e("this", "" + file[i]);
-            }
-            if (file[i].isDirectory()) {
+            } else if (file[i].isDirectory()) {
                 File[] files = file[i].listFiles();
                 dfs(files);
             }
