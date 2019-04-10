@@ -1,6 +1,7 @@
 package com.ayush.videoplayer;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.Log;
@@ -30,7 +31,9 @@ public class FolderAdapter extends ArrayAdapter<Folder> {
         ImageView imageView = (ImageView) convertView.findViewById(R.id.folderimg);
         textView.setText(getItem(position).getmFolderName());
         imageView.setImageResource(R.drawable.ic_folder_black_24dp);
-        textView1.setText(Integer.toString(getItem(position).getmSize())+" videos");
+        textView1.setText(Integer.toString(getItem(position).getmSize()) + " videos");
+        Typeface typeface = Typeface.createFromAsset(getContext().getAssets(), "font.ttf");
+        textView1.setTypeface(typeface);
         return convertView;
     }
 }
