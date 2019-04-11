@@ -8,6 +8,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class VideoActivity extends AppCompatActivity {
     HashMap<String, ArrayList<String>> hashMap;
@@ -21,6 +23,19 @@ public class VideoActivity extends AppCompatActivity {
         String number = intent.getStringExtra("number");
         number = number.substring(0, number.indexOf(' '));
         hashMap = (HashMap<String, ArrayList<String>>) intent.getSerializableExtra("map");
-        Log.e("this", "" + hashMap.size());
+        ArrayList<String> arrayList = new ArrayList<>();
+        String s=" ";
+        Iterator iterator = hashMap.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry pair = (Map.Entry) iterator.next();
+            s = pair.getKey().toString();
+            arrayList = (ArrayList<String>) pair.getValue();
+            int size = arrayList.size();
+            if (s.contains(folder) && size == Integer.parseInt(number)) {
+                break;
+            }
+        }
+        for(int i=0;i<arrayList.size();i++)
+            Log.e("this",s+"/"+arrayList.get(i));
     }
 }
