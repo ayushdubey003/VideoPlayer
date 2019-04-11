@@ -3,10 +3,12 @@ package com.ayush.videoplayer;
 public class Video {
     int mImgId;
     String mVideoName;
-    public Video(int imgId,String videoname)
-    {
-        mImgId=imgId;
-        mVideoName=videoname;
+    String mAddress;
+
+    public Video(int imgId, String videoname, String address) {
+        mImgId = imgId;
+        mVideoName = videoname;
+        mAddress = address;
     }
 
     public int getmImgId() {
@@ -23,5 +25,13 @@ public class Video {
 
     public void setmVideoName(String mVideoName) {
         this.mVideoName = mVideoName;
+    }
+
+    public void setmAddress(String mAddress) {
+        this.mAddress = mAddress;
+    }
+
+    public String getmAddress() {
+        return mAddress;
     }
 }

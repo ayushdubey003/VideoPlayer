@@ -15,7 +15,7 @@ import java.util.Map;
 public class VideoActivity extends AppCompatActivity {
     HashMap<String, ArrayList<String>> hashMap;
     private VideoAdapter mVideoAdapter;
-    private ArrayList<Video> videoArrayList;
+    private ArrayList<Video> videoArrayList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +40,10 @@ public class VideoActivity extends AppCompatActivity {
         }
         mVideoAdapter = new VideoAdapter(VideoActivity.this, 0, videoArrayList);
         ListView listView = (ListView) findViewById(R.id.videolist);
-        for (int i = 0; i < arrayList.size(); i++)
-            mVideoAdapter.add(new Video(R.drawable.ic_folder_black_24dp, arrayList.get(i)));
+        for (int i = 0; i < arrayList.size(); i++) {
+            Log.e("this", s + "/" + arrayList.get(i));
+            mVideoAdapter.add(new Video(R.drawable.ic_folder_black_24dp, arrayList.get(i), s + "/" + arrayList.get(i)));
+        }
         listView.setAdapter(mVideoAdapter);
     }
 }
