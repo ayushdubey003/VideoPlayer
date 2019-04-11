@@ -18,6 +18,8 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.airbnb.lottie.LottieAnimationView;
+
 import java.io.File;
 import java.io.FilenameFilter;
 import java.lang.reflect.Array;
@@ -33,14 +35,15 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<File> arrayList = new ArrayList<>();
     ArrayList<Folder> list = new ArrayList<>();
 
-    private ArrayAdapter<Folder> mArrayAdapter;
+    private FolderAdapter mArrayAdapter;
+    public HashMap<String, ArrayList<String>> hashMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ListView listView = (ListView) findViewById(R.id.list);
-        final com.airbnb.lottie.LottieAnimationView lottieAnimationView = (com.airbnb.lottie.LottieAnimationView) findViewById(R.id.anim);
+        final LottieAnimationView lottieAnimationView = (LottieAnimationView) findViewById(R.id.anim);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
             File[] file = root.listFiles();
             dfs(file);
             mArrayAdapter = new FolderAdapter(MainActivity.this, 0, list);
-            HashMap<String, ArrayList<String>> hashMap = new HashMap<>();
+            hashMap = new HashMap<>();
             HashSet<String> hashSet = new HashSet<>();
             for (int i = 0; i < arrayList.size(); i++) {
                 String s = arrayList.get(i).toString();
@@ -85,6 +88,7 @@ public class MainActivity extends AppCompatActivity {
                     hashMap.get(s.substring(0, ind)).add(videoName);
             }
             Iterator iterator = hashSet.iterator();
+            mArrayAdapter.getMap(hashMap);
             while (iterator.hasNext()) {
                 String s = iterator.next().toString();
                 ArrayList<String> a = hashMap.get(s);
@@ -113,5 +117,4 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
-
 }

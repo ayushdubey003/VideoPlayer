@@ -16,9 +16,13 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FolderAdapter extends ArrayAdapter<Folder> {
+
+    public HashMap<String, ArrayList<String>> hashMap;
+
     public FolderAdapter(@NonNull Context context, int resource, @NonNull ArrayList<Folder> objects) {
         super(context, resource, objects);
     }
@@ -46,9 +50,14 @@ public class FolderAdapter extends ArrayAdapter<Folder> {
                 Intent intent = new Intent(getContext(), VideoActivity.class);
                 intent.putExtra("folder", s);
                 intent.putExtra("number", number);
+                intent.putExtra("map", hashMap);
                 getContext().startActivity(intent);
             }
         });
         return convertView;
+    }
+
+    public void getMap(HashMap<String, ArrayList<String>> h) {
+        hashMap = h;
     }
 }
