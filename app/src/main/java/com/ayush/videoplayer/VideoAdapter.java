@@ -40,7 +40,7 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getContext(), VideoViewActivity.class);
+                Intent intent = new Intent(getContext(), VideoPlayerActivity.class);
                 intent.putExtra("address", filepath);
                 getContext().startActivity(intent);
             }
