@@ -33,8 +33,7 @@
                 android:paddingTop="4dp"
                 android:textColor="#000000"
                 android:textSize="18sp"
-                tools:text="Sample"
-                android:fontFamily=""/>
+                tools:text="Sample" />
 
             <TextView
                 android:id="@+id/numberofvideos"
