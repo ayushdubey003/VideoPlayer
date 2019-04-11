@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.NonNull;
@@ -16,7 +17,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -46,17 +49,20 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSIONS: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    final LottieAnimationView lottieAnimationView = (LottieAnimationView) findViewById(R.id.anim);
+                    final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.tohide);
+                    TextView textView = (TextView) findViewById(R.id.textt);
+                    Typeface typeface = Typeface.createFromAsset(getAssets(), "font.ttf");
+                    textView.setTypeface(typeface);
                     final ListView listView = (ListView) findViewById(R.id.list);
-                    lottieAnimationView.setVisibility(View.VISIBLE);
+                    linearLayout.setVisibility(View.VISIBLE);
                     Handler handler = new Handler();
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            lottieAnimationView.setVisibility(View.GONE);
+                            linearLayout.setVisibility(View.GONE);
                             listView.setVisibility(View.VISIBLE);
                         }
-                    }, 3000);
+                    }, 4000);
                     File root = Environment.getExternalStorageDirectory();
                     String rootPath = root.getPath();
                     File[] file = root.listFiles();
@@ -102,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         final ListView listView = (ListView) findViewById(R.id.list);
-        final LottieAnimationView lottieAnimationView = (LottieAnimationView) findViewById(R.id.anim);
+        final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.tohide);
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(MainActivity.this,
@@ -111,15 +117,18 @@ public class MainActivity extends AppCompatActivity {
 
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-            lottieAnimationView.setVisibility(View.VISIBLE);
+            TextView textView = (TextView) findViewById(R.id.textt);
+            Typeface typeface = Typeface.createFromAsset(getAssets(), "font.ttf");
+            textView.setTypeface(typeface);
+            linearLayout.setVisibility(View.VISIBLE);
             Handler handler = new Handler();
             handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    lottieAnimationView.setVisibility(View.GONE);
+                    linearLayout.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
                 }
-            }, 3000);
+            }, 4000);
             File root = Environment.getExternalStorageDirectory();
             String rootPath = root.getPath();
             File[] file = root.listFiles();
