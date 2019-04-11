@@ -1,6 +1,7 @@
 package com.ayush.videoplayer;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,11 +35,14 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         final String filepath = getItem(position).getmAddress();
         Glide.with(getContext())
                 .load(Uri.fromFile(new File(filepath)))
-                .apply(new RequestOptions().override(275,200))
+                .apply(new RequestOptions().override(275, 200))
                 .into(imageView);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Intent intent = new Intent(getContext(), VideoViewActivity.class);
+                intent.putExtra("address", filepath);
+                getContext().startActivity(intent);
             }
         });
         return convertView;

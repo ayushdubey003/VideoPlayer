@@ -18,6 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/list"
+        android:visibility="gone"
         app:lottie_autoPlay="true"
         app:lottie_fileName="load.json"
         app:lottie_loop="true" />
