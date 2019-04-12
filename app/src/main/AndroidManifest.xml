@@ -28,8 +28,7 @@
             android:name=".VideoActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".VideoViewActivity"
-            android:screenOrientation="landscape"></activity>
+            android:name=".VideoViewActivity"></activity>
     </application>
 
 </manifest>

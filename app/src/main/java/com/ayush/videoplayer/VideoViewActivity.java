@@ -3,8 +3,10 @@ package com.ayush.videoplayer;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -24,19 +26,28 @@ public class VideoViewActivity extends AppCompatActivity {
     private SimpleExoPlayer player;
     private PlayerView playerView;
     private boolean playWhenReady = true;
-    private long playbackPosition;
-    private int currentWindow;
+    private long playbackPosition = 0;
+    private int currentWindow = 0;
     private String path;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState != null) {
+            playbackPosition = savedInstanceState.getLong("position");
+            currentWindow = savedInstanceState.getInt("window");
+        }
         setContentView(R.layout.activity_video_view);
         path = getIntent().getStringExtra("address");
         path = "file://" + path;
         playerView = findViewById(R.id.playVideo);
-        playbackPosition = 0;
-        currentWindow = 0;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putLong("position", player.getCurrentPosition());
+        outState.putInt("window", player.getCurrentWindowIndex());
+        super.onSaveInstanceState(outState);
     }
 
     private void initializePlayer() {
@@ -45,12 +56,10 @@ public class VideoViewActivity extends AppCompatActivity {
                     new DefaultTrackSelector(),
                     new DefaultLoadControl());
             playerView.setPlayer(player);
+            player.prepare(buildMediaSource(Uri.parse(path)));
             player.setPlayWhenReady(playWhenReady);
             player.seekTo(currentWindow, playbackPosition);
         }
-        Uri uri = Uri.parse(path);
-        MediaSource mediaSource = buildMediaSource(uri);
-        player.prepare(mediaSource);
     }
 
     @Override
@@ -74,6 +83,9 @@ public class VideoViewActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (Util.SDK_INT <= 23) {
+            playbackPosition = player.getCurrentPosition();
+            currentWindow = player.getCurrentWindowIndex();
+            playWhenReady = player.getPlayWhenReady();
             releasePlayer();
         }
     }
@@ -91,9 +103,7 @@ public class VideoViewActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if (Util.SDK_INT > 23) {
-            releasePlayer();
-        }
+        releasePlayer();
     }
 
     @Override
