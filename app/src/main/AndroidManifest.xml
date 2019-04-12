@@ -27,12 +27,9 @@
         <activity
             android:name=".VideoActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".VideoPlayerActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:label="@string/title_activity_video_player"
-            android:theme="@style/FullscreenTheme"
-            android:screenOrientation="landscape"></activity>
+        <activity android:name=".VideoViewActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar.Fullscreen"></activity>
     </application>
 
 </manifest>
