@@ -21,8 +21,14 @@ public class VideoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
+        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         Intent intent = getIntent();
         String folder = intent.getStringExtra("folder");
+        String a = folder;
+        if (a.equalsIgnoreCase("0"))
+            a = "Internal Memory";
+        toolbar.setTitle(a);
         String number = intent.getStringExtra("number");
         number = number.substring(0, number.indexOf(' '));
         hashMap = (HashMap<String, ArrayList<String>>) intent.getSerializableExtra("map");
