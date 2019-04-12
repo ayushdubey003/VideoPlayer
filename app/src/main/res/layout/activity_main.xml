@@ -13,16 +13,17 @@
         android:layout_alignParentTop="true"
         android:background="#3b5998"
         android:elevation="4dp"
-        app:titleTextColor="#FFFFFF"
-        app:title="Folders"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Folders"
+        app:titleTextColor="#FFFFFF" />
 
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:divider="@null"
+        android:hapticFeedbackEnabled="true"
         android:visibility="gone"></ListView>
 
     <LinearLayout

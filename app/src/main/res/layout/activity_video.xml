@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".VideoActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".VideoActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -23,6 +23,7 @@
         android:id="@+id/videolist"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@null" />
+        android:divider="@null"
+        android:hapticFeedbackEnabled="true" />
 
 </LinearLayout>
