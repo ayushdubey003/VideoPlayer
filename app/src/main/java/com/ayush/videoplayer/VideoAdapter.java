@@ -36,6 +36,7 @@ public class VideoAdapter extends ArrayAdapter<Video> {
         Glide.with(getContext())
                 .load(Uri.fromFile(new File(filepath)))
                 .apply(new RequestOptions().override(275, 200))
+                .centerCrop()
                 .into(imageView);
         convertView.setOnClickListener(new View.OnClickListener() {
             @Override
