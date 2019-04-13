@@ -18,6 +18,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +26,7 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Toolbar;
@@ -65,10 +67,10 @@ public class MainActivity extends AppCompatActivity {
                 alertDialog.setIcon(R.drawable.ic_view_stream_black_24dp);
                 alertDialog.setMessage("Link Here");
                 final EditText editText = new EditText(MainActivity.this);
-                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.MATCH_PARENT,
-                        LinearLayout.LayoutParams.MATCH_PARENT);
+                int dim = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 400, getResources().getDisplayMetrics());
+                LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(dim, dim);
                 editText.setLayoutParams(lp);
+                editText.setSingleLine();
                 alertDialog.setView(editText);
                 alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
@@ -80,7 +82,9 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String link = editText.getText().toString();
-                        Toast.makeText(MainActivity.this, link, Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, InternetVideoViewActivity.class);
+                        intent.putExtra("link", link);
+                        startActivity(intent);
                     }
                 });
                 alertDialog.show();
@@ -97,6 +101,7 @@ public class MainActivity extends AppCompatActivity {
         switch (requestCode) {
             case PERMISSIONS: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
                     final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.tohide);
                     TextView textView = (TextView) findViewById(R.id.textt);
                     Typeface typeface = Typeface.createFromAsset(getAssets(), "font.ttf");
@@ -107,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
                     handler.postDelayed(new Runnable() {
                         @Override
                         public void run() {
+                            toolbar.setVisibility(View.VISIBLE);
                             linearLayout.setVisibility(View.GONE);
                             listView.setVisibility(View.VISIBLE);
                         }
@@ -155,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
+        final android.support.v7.widget.Toolbar toolbar = (android.support.v7.widget.Toolbar) findViewById(R.id.my_toolbar);
         setSupportActionBar(toolbar);
         final ListView listView = (ListView) findViewById(R.id.list);
         final LinearLayout linearLayout = (LinearLayout) findViewById(R.id.tohide);
@@ -177,6 +183,7 @@ public class MainActivity extends AppCompatActivity {
                 public void run() {
                     linearLayout.setVisibility(View.GONE);
                     listView.setVisibility(View.VISIBLE);
+                    toolbar.setVisibility(View.VISIBLE);
                 }
             }, 4000);
             File root = Environment.getExternalStorageDirectory();
