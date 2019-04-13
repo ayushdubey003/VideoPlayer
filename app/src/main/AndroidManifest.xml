@@ -28,7 +28,9 @@
             android:name=".VideoActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".VideoViewActivity" />
-        <activity android:name=".InternetVideoViewActivity"></activity>
+        <activity
+            android:name=".InternetVideoViewActivity"
+            android:screenOrientation="landscape"></activity>
     </application>
 
 </manifest>
